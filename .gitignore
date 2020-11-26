@@ -1,6 +1,13 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+
 # Prerequisites
 *.d
-dumper
+
 
 # Object files
 *.o
