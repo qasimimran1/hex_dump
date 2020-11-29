@@ -22,7 +22,7 @@ void dump_file(dumper_setting_t *dumper_opts)
 
     if (dumper_opts->output == FILE_IO)
     {
-        f_output = fopen(dumper_opts->fout_name, "ab");
+        f_output = fopen(dumper_opts->fout_name, "wb");
         if (f_output == NULL)
         {
             fprintf(stderr, "Error opening %s file \n", dumper_opts->fout_name);
@@ -82,7 +82,7 @@ void dump_file(dumper_setting_t *dumper_opts)
             {
                 fprintf(f_output, "%02x ", _read[i]);
             }
-            fprintf(f_output, " |");
+            fprintf(f_output, " | ");
             for (uint8_t i = 0; i < dumper_opts->col_size; i++)
             {
                 if (_read[i] >= MIN && _read[i] <= MAX)
@@ -94,7 +94,7 @@ void dump_file(dumper_setting_t *dumper_opts)
                     fprintf(f_output, ".");
                 }
             }
-            fprintf(f_output, "|\n");
+            fprintf(f_output, "| \n");
             char_count = 0;
             address += dumper_opts->col_size;
         }
@@ -115,7 +115,7 @@ void dump_file(dumper_setting_t *dumper_opts)
                 fprintf(f_output, "-- ");
             }
         }
-        fprintf(f_output, " |");
+        fprintf(f_output, " | ");
         for (uint8_t i = 0; i < dumper_opts->col_size; i++)
         {
             if (i < char_count)
@@ -134,7 +134,7 @@ void dump_file(dumper_setting_t *dumper_opts)
                 fprintf(f_output, "-");
             }
         }
-        fprintf(f_output, "|\n");
+        fprintf(f_output, "| \n");
     }
     free(fBuff);
 }

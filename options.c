@@ -25,11 +25,29 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
 {
     int opt = 0;
     int long_index = 0;
-    
+    uint8_t col_flag = 0, out_flag = 0, arg_count_flag = 0;
+
+    for (size_t i = 0; i < argc; i++)
+    {
+        if (strcmp("--", argv[i]) == 0 && !arg_count_flag)
+        {
+            dumper_opts->fin_name = argv[i + 1];
+            dumper_opts->input = FILE_IO;
+            arg_count_flag = 1;
+        }
+        // if (save)
+        // {
+        //
+        //     input_files[f_indx] = argv[i];
+        //     //
+        //     f_indx++;
+        // }
+    }
 
     while ((opt = getopt_long(argc, argv, "hc:o:",
                               long_options, &long_index)) != -1)
     {
+        arg_count_flag = 1;
         switch (opt)
         {
         case 'h':
@@ -40,19 +58,39 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
         break;
         case 'o':
         {
-            dumper_opts->fout_name = optarg;
-            dumper_opts->output = FILE_IO;
+            if (!out_flag)
+            {
+                out_flag = 1;
+                dumper_opts->fout_name = optarg;
+                dumper_opts->output = FILE_IO;
+            }
+            else
+            {
+                fprintf(stderr, "Output file Opt repeated!!");
+                exit(1);
+            }
+
             break;
         }
 
         case 'c':
         {
-            dumper_opts->col_size = atoi(optarg);
-            if (dumper_opts->col_size <= 0)
+            if (!col_flag)
             {
-                fprintf(stderr, "Column Size SHOULD be greater than zero!!");
+                col_flag = 1;
+                dumper_opts->col_size = atoi(optarg);
+                if (dumper_opts->col_size <= 0)
+                {
+                    fprintf(stderr, "Column Size SHOULD be greater than zero!!");
+                    exit(1);
+                }
+            }
+            else
+            {
+                fprintf(stderr, "Col Opt repeated!!");
                 exit(1);
             }
+
             break;
         }
         default:
@@ -61,5 +99,10 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
             exit(EXIT_FAILURE);
         }
         }
+    }
+    if (!arg_count_flag && argc > 0)
+    {
+        fprintf(stderr, "Too many arguments without option");
+        exit(1);
     }
 }
