@@ -44,7 +44,7 @@ void dump_file(dumper_setting_t *dumper_opts)
         fseek(fp_input, 0, SEEK_END);
         fp_size = ftell(fp_input);
 
-        printf("fp_size: %d\n", fp_size);
+        //printf("fp_size: %d\n", fp_size);
         rewind(fp_input);
 
         if (fp_size > 0)
