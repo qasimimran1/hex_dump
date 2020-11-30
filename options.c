@@ -5,7 +5,7 @@
 static struct option long_options[] = {
     {"help", no_argument, 0, 'h'},
     {"output", required_argument, 0, 'o'},
-    {"column", required_argument, 0, 'c'},
+    {"columns", required_argument, 0, 'c'},
     {0, 0, 0, 0}};
 
 void print_usage(void)
@@ -47,7 +47,7 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
     while ((opt = getopt_long(argc, argv, "hc:o:",
                               long_options, &long_index)) != -1)
     {
-        arg_count_flag = 1;
+        arg_count_flag = 2;
         switch (opt)
         {
         case 'h':
@@ -81,7 +81,7 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
                 dumper_opts->col_size = atoi(optarg);
                 if (dumper_opts->col_size <= 0)
                 {
-                    fprintf(stderr, "Column Size SHOULD be greater than zero!!");
+                    fprintf(stderr, "Column Size SHOULD be greater than one!!");
                     exit(1);
                 }
             }
@@ -100,9 +100,21 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
         }
         }
     }
-    if (!arg_count_flag && argc > 0)
+    if (!arg_count_flag && argc == 2)
     {
+        dumper_opts->fin_name = argv[1];
+        dumper_opts->input = FILE_IO;
+    }
+    if (!arg_count_flag && argc > 2)
+    {
+
         fprintf(stderr, "Too many arguments without option");
         exit(1);
+    }
+    if (arg_count_flag == 2)
+    {
+        dumper_opts->fin_name = argv[argc - 1];
+        dumper_opts->input = FILE_IO;
+        // printf("file name: %s\n", dumper_opts->fin_name);
     }
 }
