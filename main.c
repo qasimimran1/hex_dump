@@ -1,8 +1,6 @@
 #include <string.h>
 #include "options.h"
 #include "dumper.h"
-#define NO_OF_FILES 10
-#define FILE_NAME_LEN 20
 
 int main(int argc, char **argv)
 {

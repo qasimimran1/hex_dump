@@ -35,13 +35,6 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
             dumper_opts->input = FILE_IO;
             arg_count_flag = 1;
         }
-        // if (save)
-        // {
-        //
-        //     input_files[f_indx] = argv[i];
-        //     //
-        //     f_indx++;
-        // }
     }
 
     while ((opt = getopt_long(argc, argv, "hc:o:",
@@ -107,7 +100,6 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
     }
     if (!arg_count_flag && argc > 2)
     {
-
         fprintf(stderr, "Too many arguments without option");
         exit(1);
     }
@@ -115,6 +107,5 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
     {
         dumper_opts->fin_name = argv[argc - 1];
         dumper_opts->input = FILE_IO;
-        // printf("file name: %s\n", dumper_opts->fin_name);
     }
 }

@@ -8,7 +8,6 @@ void dump_file(dumper_setting_t *dumper_opts)
     if (dumper_opts->input == FILE_IO)
     {
         fp_input = fopen(dumper_opts->fin_name, "rb");
-        //fp_input = fopen("test_02.in", "rb");
         if (fp_input == NULL)
         {
             fprintf(stderr, "Error opening %s file \n", dumper_opts->fin_name);
@@ -36,15 +35,12 @@ void dump_file(dumper_setting_t *dumper_opts)
 
     uint32_t char_read = 0, address = 0, char_count = 0, fp_size = 0, total_read = 0;
     uint8_t _read[100];
-    // uint8_t final_output[200];
     uint8_t *fBuff;
 
     if (dumper_opts->input == FILE_IO)
     {
         fseek(fp_input, 0, SEEK_END);
         fp_size = ftell(fp_input);
-
-        //printf("fp_size: %d\n", fp_size);
         rewind(fp_input);
 
         if (fp_size > 0)
@@ -58,13 +54,11 @@ void dump_file(dumper_setting_t *dumper_opts)
             exit(1);
         }
         fread(fBuff, sizeof(uint8_t), fp_size, fp_input); // read the file into the buffer
-
         fclose(fp_input);
     }
     else
     {
         fBuff = (uint8_t *)malloc(MAX_READ * sizeof(uint8_t));
-        // printf("Enter Text\n");
         fp_size = fread(fBuff, sizeof(uint8_t), MAX_READ, fp_input);
     }
 
@@ -76,7 +70,6 @@ void dump_file(dumper_setting_t *dumper_opts)
 
         if ((char_count % dumper_opts->col_size) == 0)
         {
-            //printf("char_count: %d\n", char_count);
             fprintf(f_output, "%08x | ", address);
             for (uint8_t i = 0; i < dumper_opts->col_size; i++)
             {
@@ -102,7 +95,6 @@ void dump_file(dumper_setting_t *dumper_opts)
 
     if (char_count > 0) // for remaining characters
     {
-        //printf("total_read: %d char_count: %d\n", total_read, char_count);
         fprintf(f_output, "%08x | ", address);
         for (uint8_t i = 0; i < dumper_opts->col_size; i++)
         {
