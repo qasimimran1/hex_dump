@@ -1,6 +1,7 @@
 #include <getopt.h>
 #include "options.h"
 #include "dumper.h"
+#include "string.h"
 
 static struct option long_options[] = {
     {"help", no_argument, 0, 'h'},
@@ -27,7 +28,7 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
     int long_index = 0;
     uint8_t col_flag = 0, out_flag = 0, arg_count_flag = 0;
 
-    for (size_t i = 0; i < argc; i++)
+    for (int8_t i = 0; i < argc; i++)
     {
         if (strcmp("--", argv[i]) == 0 && !arg_count_flag)
         {
