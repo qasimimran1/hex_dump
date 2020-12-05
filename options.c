@@ -101,11 +101,13 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
     if (!arg_count_flag && argc > 2)
     {
         fprintf(stderr, "Too many arguments without option");
+        print_usage();
         exit(1);
     }
-    if (arg_count_flag == 2)
+    //    printf("argc: %d optind: %d\n", argc, optind);
+    if (argc > optind)
     {
-        dumper_opts->fin_name = argv[argc - 1];
+        dumper_opts->fin_name = argv[optind];
         dumper_opts->input = FILE_IO;
     }
 }
