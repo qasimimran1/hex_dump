@@ -9,7 +9,7 @@
 #define MIN 0x20
 #define MAX 0x7e
 #define COL 16
-#define MAX_READ 4096
+#define MAX_READ 1024 * 1024
 
 typedef enum
 {

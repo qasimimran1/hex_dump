@@ -60,6 +60,7 @@ void dump_file(dumper_setting_t *dumper_opts)
     {
         fBuff = (uint8_t *)malloc(MAX_READ * sizeof(uint8_t));
         fp_size = fread(fBuff, sizeof(uint8_t), MAX_READ, fp_input);
+        //printf("fp_size: %d\n", fp_size);
     }
 
     for (uint32_t count = 0; count < fp_size; count++)

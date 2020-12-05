@@ -32,9 +32,12 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
     {
         if (strcmp("--", argv[i]) == 0 && !arg_count_flag)
         {
-            dumper_opts->fin_name = argv[i + 1];
-            dumper_opts->input = FILE_IO;
-            arg_count_flag = 1;
+            if (argc > (i + 1))
+            {
+                dumper_opts->fin_name = argv[i + 1];
+                dumper_opts->input = FILE_IO;
+                arg_count_flag = 1;
+            }
         }
     }
 
