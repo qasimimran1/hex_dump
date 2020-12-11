@@ -11,6 +11,11 @@
 #define COL 16
 #define MAX_READ 1024 * 1024
 
+#define ADDR_L 15
+#define HEX_L 04
+#define ASC_L 02
+#define SPC_L 03
+
 typedef enum
 {
     STD_IO,

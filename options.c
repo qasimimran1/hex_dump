@@ -78,7 +78,7 @@ void process_options(int argc, char *const *argv, dumper_setting_t *dumper_opts)
                 dumper_opts->col_size = atoi(optarg);
                 if (dumper_opts->col_size <= 0)
                 {
-                    fprintf(stderr, "Column Size SHOULD be greater than one!!");
+                    fprintf(stderr, "Column Size SHOULD be greater than Zero!!");
                     exit(1);
                 }
             }
