@@ -10,7 +10,7 @@ static void print_out(uint8_t *buf, uint32_t address, int16_t col_size, bool is_
     int16_t index_h = 0;
     int16_t index_a = 0;
     uint16_t separator = 0;
-    char final_output[400] = {'0'};
+    char final_output[400] = {'1'};
     uint16_t p_count = 17 + (col_size * 4); // 17 is due to address and spaces and '|'
 
     index_h += snprintf(&final_output[index_h], ADDR_L, "%08x | ", address);
@@ -21,8 +21,7 @@ static void print_out(uint8_t *buf, uint32_t address, int16_t col_size, bool is_
     {
         if (is_last == false)
         {
-            index_h += snprintf(&final_output[index_h], HEX_L, "%02x ", buf[i]);
-            snprintf(&final_output[separator], SPC_L, " | ");
+            index_h += snprintf(&final_output[index_h], HEX_L, "%02x ", buf[i]);                     
             if (buf[i] >= MIN && buf[i] <= MAX)
             {
                 index_a += snprintf(&final_output[index_a], ASC_L, "%c", buf[i]);
@@ -36,8 +35,7 @@ static void print_out(uint8_t *buf, uint32_t address, int16_t col_size, bool is_
         {
             if (i < char_count)
             {
-                index_h += snprintf(&final_output[index_h], HEX_L, "%02x ", buf[i]);
-                snprintf(&final_output[separator], SPC_L, " | ");
+                index_h += snprintf(&final_output[index_h], HEX_L, "%02x ", buf[i]);                
                 if (buf[i] >= MIN && buf[i] <= MAX)
                 {
                     index_a += snprintf(&final_output[index_a], ASC_L, "%c", buf[i]);
@@ -49,13 +47,16 @@ static void print_out(uint8_t *buf, uint32_t address, int16_t col_size, bool is_
             }
             else
             {
-                index_h += snprintf(&final_output[index_h], HEX_L, "-- ");
-                snprintf(&final_output[separator], SPC_L, " | ");
+                index_h += snprintf(&final_output[index_h], HEX_L, "-- ");                
                 index_a += snprintf(&final_output[index_a], ASC_L, "-");
             }
         }
     }
-    index_a += snprintf(&final_output[index_a], SPC_L, " |\n");
+    //snprintf(&final_output[separator], SPC_L, " | ");
+    final_output[separator++] = ' '; 
+    final_output[separator++] = '|';
+    final_output[separator++] = ' ';
+    index_a += snprintf(&final_output[index_a], HEX_L, " |\n");
     fwrite(final_output, sizeof(char), p_count, f_output);
 }
 
